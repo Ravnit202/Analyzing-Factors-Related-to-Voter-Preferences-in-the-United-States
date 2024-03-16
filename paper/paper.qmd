@@ -1,0 +1,161 @@
+---
+title: "Analyzing Factors in Relation to Voter Preferences in the United States"
+author: Ravnit Lotay
+date: "today"
+date-format: long
+abstract: "This study investigates the factors influencing voter support in the 2022 US presidential election, utilizing logistic regression on CCES 2022 data."
+format: pdf
+toc: true
+number-sections: true
+bibliography: references.bib
+nocite: |
+  @rstanarm, @tidyverse, @haven, @dplyr, @dataverse, @readr, @here, @gridExtra, @kableExtra, @ggplot2, @modelsummary, @knitr
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(rstanarm)
+library(kableExtra)
+library(ggplot2)
+library(modelsummary)
+library(readr)
+library(here)
+library(gridExtra)
+library(knitr)
+
+cces2022 = read_csv(here::here("data/analysis_data/cces_analysis_data.csv"))
+```
+
+
+\newpage 
+
+
+# Introduction
+
+The goal of the Cooperative Election Study (CES) is to investigate how Americans vote and perceive their electoral experiences, how they hold their representatives accountable in elections, and how their behavior and experiences vary. The study used an extremely large sample that allowed it to account for variations across different legislative districts.
+
+It is important to note that the 2022 CES data has adjusted the input data via a weightening process to ensure samples are valid and representative.
+
+# Data {#sec-data}
+
+The Dataset contains 60,000 cases in which individuals responsed to survey questions including, but not limited to: voting prefrence, age, gender and highest level of education. The mentioned factors will be used to draw inferences about voter preferences via a logistic regression model.
+
+## Data Visualizations
+
+Within the CES data, there are relations between the different variables. Below are two figures showing how gender, age, and education relate to voter preference.
+
+```{r}
+#| label: fig-fig1
+#| fig-cap:  Distribution of Presidential Preferences by gender and education
+#| echo: false
+#| warning: false
+#| message: false
+
+cces2022 |>
+  ggplot(aes(x = education, fill = voted_for)) +
+  stat_count(position = "dodge") +
+  facet_wrap(facets = vars(gender)) +
+  theme_minimal() +
+  labs(
+    x = "Highest education",
+    y = "Number of respondents",
+    fill = "Voted for"
+  ) +
+  coord_flip() +
+  scale_fill_brewer(palette = "Set1") +
+  theme(legend.position = "bottom")
+```
+```{r}
+#| label: fig-fig2
+#| fig-cap: Distribution of Presidential Preferences by age and education
+#| echo: false
+#| warning: false
+#| message: false
+
+cces2022 |>
+  mutate(age_group = case_when(
+    age <= 24 ~ "18-24",
+    age >= 25 & age <= 34 ~ "25-34",
+    age >= 35 & age <= 44 ~ "35-44",
+    age >= 45 & age <= 54 ~ "45-54",
+    age >= 55 & age <= 64 ~ "55-64",
+    age >= 65 ~ "65+"
+  )) |>
+  ggplot(aes(x = age_group, fill = voted_for)) +
+  geom_bar(position = "dodge") +
+  facet_wrap(facets = vars(gender)) +
+  theme_minimal() +
+  labs(
+    x = "Age Group",
+    y = "Number of Respondents",
+    fill = "Voted For"
+  ) +
+  coord_flip() +
+  scale_fill_brewer(palette = "Set1") +
+  theme(legend.position = "bottom")
+```
+
+# Model {#sec-model}
+
+To assess the roles of gender, education, and age on voting preferences, a logistic regression model is used.
+
+## Model Creation
+To create the model, $y_i$ can be defined as the respondent’s political preference. This is equal to 1 for Trump and 0 for Biden. Then, gender can be defined via $mq_i$, and $mq_age$ to be their age. We can estimate these parameters using $stem()$.
+
+\begin{align} 
+y_i|\pi_i &\sim \mbox{Bern}(\pi_i) \\
+\mbox{logit}(\pi_i) & = \beta_0+\beta_1 \times\mbox{gender}_i +\beta_2 \times \mbox{education}_i\\
+\beta_0 &\sim \mbox{Normal}(0, 2.5)\\
+\beta_1 &\sim \mbox{Normal}(0, 2.5)\\
+\beta_2 &\sim \mbox{Normal}(0. 2.5)
+\end{align}
+
+# Results {#sec-result}
+
+The logistic regression model provides invaluable information related to voter preferences.
+
+## Results Table
+```{r}
+#| label: tbl-table1
+#| tbl-cap: Results of logistic regression on the voted for Trump
+#| echo: false
+#| warning: false
+
+voter_preferences <- readRDS(here::here("model/2022_cces_voter_model.rds"))
+
+modelsummary(
+  list(
+    "Support Trump" = voter_preferences
+   ),
+   statistic = "mad"
+)
+
+```
+
+# Discussion {#sec-discussion}
+
+## Model Interpreted Results
+
+The summary of the results, as shown above, indicate the following:
+
+1. Females and those identifying as Non-binary are more strongly against voting for Trump when compared to the reference group.
+   
+2. Those identifying as Other are more likely to vote for Trump than the reference group.
+   
+3. Those that have completed a 4-year college or university program are much less likely to vote for Trump than those with no highschool education or those with a highschool diploma.
+   
+The coefficient for woman, is seen as -0.427, while the coefficient for Non-binary is -2.274. This, in essence, implies that these groups are much more opposed to voting for Trump than our baseline reference group of males. 
+
+As for age, due to the positive coefficient, it is evident that the older an individual is, the more likely they are to vote for Trump.
+
+It is important to note that since these values are based on a reference group (males for the gender attribute), a positive coefficient does not inherently mean that the majority of the group is voting for Trump. To further prove this statement, it is clear that despite many coefficients being positive in the above table, Donald Trump was not elected in the last presidential election. 
+
+## Weaknesses
+
+Considering the data collected and analyzed, there are several weaknesses that could be addressed. First, there are relatively few Non-binary and Other values in the gender column, and as such they could be grouped together or otherwise adjusted for. This is necessary as logistic regression is typically influenced greatly by outliers. Second, additional parameters, such as race, could be used to improve the quality of the model.
+
+\newpage
+
+# References
+
+\nocite{rstanarm, tidyverse, haven, dplyr, dataverse, readr, here, gridExtra, kableExtra, ggplot2, modelsummary, knitr}

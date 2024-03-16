@@ -1,0 +1,205 @@
+Create a references page in a .bib file based on these following R libraries. It will be used in a .qmd file. Show me just the text with accurate years and urls.
+library(rstanarm)
+library(tidyverse)
+library(haven)
+library(dplyr)
+library(dataverse)
+library(readr)
+
+library(tidyverse)
+library(readr)
+library(here)
+library(gridExtra)
+library(kableExtra)
+library(ggplot2)
+library(modelsummary)
+library(rstanarm)
+library(knitr)
+
+ChatGPT
+Finished analyzing
+Always expand output?
+python
+Copy code
+# Preparing the BibTeX entries for the requested R libraries.
+# These libraries are commonly used in the R community for various purposes including statistical analysis,
+# data manipulation, and reporting. While exact publication years may vary and newer versions might have been released,
+# the initial release years and URLs to the CRAN pages (or relevant pages) will be used where possible.
+
+bib_entries = """
+@Manual{rstanarm,
+    title = {rstanarm: Bayesian Applied Regression Modeling via Stan},
+    author = {{Stan Development Team}},
+    year = {2020},
+    url = {https://mc-stan.org/rstanarm},
+}
+
+@Manual{tidyverse,
+    title = {tidyverse: Easily Install and Load the 'Tidyverse'},
+    author = {Hadley Wickham},
+    year = {2019},
+    url = {https://CRAN.R-project.org/package=tidyverse},
+}
+
+@Manual{haven,
+    title = {haven: Import and Export 'SPSS', 'Stata' and 'SAS' Files},
+    author = {Hadley Wickham and Evan Miller},
+    year = {2020},
+    url = {https://CRAN.R-project.org/package=haven},
+}
+
+@Manual{dplyr,
+    title = {dplyr: A Grammar of Data Manipulation},
+    author = {Hadley Wickham and Romain François and Lionel Henry and Kirill Müller},
+    year = {2020},
+    url = {https://CRAN.R-project.org/package=dplyr},
+}
+
+@Manual{dataverse,
+    title = {dataverse: Client for Dataverse 4 Repositories},
+    author = {Thomas Leeper},
+    year = {2019},
+    url = {https://CRAN.R-project.org/package=dataverse},
+}
+
+@Manual{readr,
+    title = {readr: Read Rectangular Text Data},
+    author = {Hadley Wickham and Jim Hester},
+    year = {2018},
+    url = {https://CRAN.R-project.org/package=readr},
+}
+
+@Manual{here,
+    title = {here: A Simpler Way to Find Your Files},
+    author = {Kirill Müller},
+    year = {2017},
+    url = {https://CRAN.R-project.org/package=here},
+}
+
+@Manual{gridExtra,
+    title = {gridExtra: Miscellaneous Functions for "Grid" Graphics},
+    author = {Baptiste Auguié},
+    year = {2017},
+    url = {https://CRAN.R-project.org/package=gridExtra},
+}
+
+@Manual{kableExtra,
+    title = {kableExtra: Construct Complex Table with 'kable' and Pipe Syntax},
+    author = {Hao Zhu},
+    year = {2019},
+    url = {https://CRAN.R-project.org/package=kableExtra},
+}
+
+@Manual{ggplot2,
+    title = {ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics},
+    author = {Hadley Wickham},
+    year = {2020},
+    url = {https://CRAN.R-project.org/package=ggplot2},
+}
+
+@Manual{modelsummary,
+    title = {modelsummary: Summary Tables and Plots for Statistical Models and Data: Beautiful, Customizable, and Publication-Ready},
+    author = {Vincent Arel-Bundock},
+    year = {2020},
+    url = {https://CRAN.R-project.org/package=modelsummary},
+}
+
+@Manual{knitr,
+    title = {knitr: A General-Purpose Package for Dynamic Report Generation in R},
+    author = {Yihui Xie},
+    year = {2020},
+    url = {https://yihui.org/knitr/},
+}
+"""
+
+bib_entries
+Result
+'\n@Manual{rstanarm,\n    title = {rstanarm: Bayesian Applied Regression Modeling via Stan},\n    author = {{Stan Development Team}},\n    year = {2020},\n    url = {https://mc-stan.org/rstanarm},\n}\n\n@Manual{tidyverse,\n    title = {tidyverse: Easily Install and Load the \'Tidyverse\'},\n    author = {Hadley Wickham},\n    year = {2019},\n    url = {https://CRAN.R-project.org/package=tidyverse},\n}\n\n@Manual{haven,\n    title = {haven: Import and Export \'SPSS\', \'Stata\' and \'SAS\' Files},\n    author = {Hadley Wickham and Evan Miller},\n    year = {2020},\n    url = {https://CRAN.R-project.org/package=haven},\n}\n\n@Manual{dplyr,\n    title = {dplyr: A Grammar of Data Manipulation},\n    author = {Hadley Wickham and Romain François and Lionel Henry and Kirill Müller},\n    year = {2020},\n    url = {https://CRAN.R-project.org/package=dplyr},\n}\n\n@Manual{dataverse,\n    title = {dataverse: Client for Dataverse 4 Repositories},\n    author = {Thomas Leeper},\n    year = {2019},\n    url = {https://CRAN.R-project.org/package=dataverse},\n}\n\n@Manual{readr,\n    title = {readr: Read Rectangular Text Data},\n    author = {Hadley Wickham and Jim Hester},\n    year = {2018},\n    url = {https://CRAN.R-project.org/package=readr},\n}\n\n@Manual{here,\n    title = {here: A Simpler Way to Find Your Files},\n    author = {Kirill Müller},\n    year = {2017},\n    url = {https://CRAN.R-project.org/package=here},\n}\n\n@Manual{gridExtra,\n    title = {gridExtra: Miscellaneous Functions for "Grid" Graphics},\n    author = {Baptiste Auguié},\n    year = {2017},\n    url = {https://CRAN.R-project.org/package=gridExtra},\n}\n\n@Manual{kableExtra,\n    title = {kableExtra: Construct Complex Table with \'kable\' and Pipe Syntax},\n    author = {Hao Zhu},\n    year = {2019},\n    url = {https://CRAN.R-project.org/package=kableExtra},\n}\n\n@Manual{ggplot2,\n    title = {ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics},\n    author = {Hadley Wickham},\n    year = {2020},\n    url = {https://CRAN.R-project.org/package=ggplot2},\n}\n\n@Manual{modelsummary,\n    title = {modelsummary: Summary Tables and Plots for Statistical Models and Data: Beautiful, Customizable, and Publication-Ready},\n    author = {Vincent Arel-Bundock},\n    year = {2020},\n    url = {https://CRAN.R-project.org/package=modelsummary},\n}\n\n@Manual{knitr,\n    title = {knitr: A General-Purpose Package for Dynamic Report Generation in R},\n    author = {Yihui Xie},\n    year = {2020},\n    url = {https://yihui.org/knitr/},\n}\n'
+Here are the BibTeX entries for the R libraries you mentioned, formatted for use in a .qmd file references page. Please ensure to adjust the years and URLs if necessary, based on the most recent versions or your specific usage:
+
+bibtex
+Copy code
+@Manual{rstanarm,
+    title = {rstanarm: Bayesian Applied Regression Modeling via Stan},
+    author = {{Stan Development Team}},
+    year = {2020},
+    url = {https://mc-stan.org/rstanarm},
+}
+
+@Manual{tidyverse,
+    title = {tidyverse: Easily Install and Load the 'Tidyverse'},
+    author = {Hadley Wickham},
+    year = {2019},
+    url = {https://CRAN.R-project.org/package=tidyverse},
+}
+
+@Manual{haven,
+    title = {haven: Import and Export 'SPSS', 'Stata' and 'SAS' Files},
+    author = {Hadley Wickham and Evan Miller},
+    year = {2020},
+    url = {https://CRAN.R-project.org/package=haven},
+}
+
+@Manual{dplyr,
+    title = {dplyr: A Grammar of Data Manipulation},
+    author = {Hadley Wickham and Romain François and Lionel Henry and Kirill Müller},
+    year = {2020},
+    url = {https://CRAN.R-project.org/package=dplyr},
+}
+
+@Manual{dataverse,
+    title = {dataverse: Client for Dataverse 4 Repositories},
+    author = {Thomas Leeper},
+    year = {2019},
+    url = {https://CRAN.R-project.org/package=dataverse},
+}
+
+@Manual{readr,
+    title = {readr: Read Rectangular Text Data},
+    author = {Hadley Wickham and Jim Hester},
+    year = {2018},
+    url = {https://CRAN.R-project.org/package=readr},
+}
+
+@Manual{here,
+    title = {here: A Simpler Way to Find Your Files},
+    author = {Kirill Müller},
+    year = {2017},
+    url = {https://CRAN.R-project.org/package=here},
+}
+
+@Manual{gridExtra,
+    title = {gridExtra: Miscellaneous Functions for "Grid" Graphics},
+    author = {Baptiste Auguié},
+    year = {2017},
+    url = {https://CRAN.R-project.org/package=gridExtra},
+}
+
+@Manual{kableExtra,
+    title = {kableExtra: Construct Complex Table with 'kable' and Pipe Syntax},
+    author = {Hao Zhu},
+    year = {2019},
+    url = {https://CRAN.R-project.org/package=kableExtra},
+}
+
+@Manual{ggplot2,
+    title = {ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics},
+    author = {Hadley Wickham},
+    year = {2020},
+    url = {https://CRAN.R-project.org/package=ggplot2},
+}
+
+@Manual{modelsummary,
+    title = {modelsummary: Summary Tables and Plots for Statistical Models and Data: Beautiful, Customizable, and Publication-Ready},
+    author = {Vincent Arel-Bundock},
+    year = {2020},
+    url = {https://CRAN.R-project.org/package=modelsummary},
+}
+
+@Manual{knitr,
+    title = {knitr: A General-Purpose Package for Dynamic Report Generation in R},
+    author = {Yihui Xie},
+    year = {2020},
+    url = {https://yihui.org/knitr/},
+}
+This compilation provides a broad coverage of tools for data manipulation, visualization, reporting, and statistical analysis, which are foundational for many types of data analysis and research projects in R. ​
