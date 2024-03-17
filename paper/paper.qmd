@@ -1,9 +1,9 @@
 ---
-title: "Analyzing Factors in Relation to Voter Preferences in the United States"
+title: "Analyzing Factors Related to Voter Preferences in the United States"
 author: Ravnit Lotay
 date: "today"
 date-format: long
-abstract: "This study investigates the factors influencing voter support in the 2022 US presidential election, utilizing logistic regression on CCES 2022 data."
+abstract: "This study investigates the factors influencing voter support in the 2022 US presidential election, utilizing logistic regression on CCES 2022 data. The results of the analysis will be crucial in understanding why individuals or demographics vote for a certain individual or party,"
 format: pdf
 toc: true
 number-sections: true
@@ -32,7 +32,7 @@ cces2022 = read_csv(here::here("data/analysis_data/cces_analysis_data.csv"))
 
 # Introduction
 
-The goal of the Cooperative Election Study (CES) is to investigate how Americans vote and perceive their electoral experiences, how they hold their representatives accountable in elections, and how their behavior and experiences vary. The study used an extremely large sample that allowed it to account for variations across different legislative districts.
+The goal of the Cooperative Election Study (CES) is to investigate how Americans vote and perceive their electoral experiences, how they hold their representatives accountable in elections, and how their behavior and experiences vary. The study used a sample of 60,000, allowing it to account for variations across different legislative districts.
 
 It is important to note that the 2022 CES data has adjusted the input data via a weightening process to ensure samples are valid and representative.
 
@@ -100,26 +100,38 @@ cces2022 |>
 To assess the roles of gender, education, and age on voting preferences, a logistic regression model is used.
 
 ## Model Creation
-To create the model, $y_i$ can be defined as the respondent’s political preference. This is equal to 1 for Trump and 0 for Biden. Then, gender can be defined via $mq_i$, and $mq_age$ to be their age. We can estimate these parameters using $stem()$.
 
-\begin{align} 
-y_i|\pi_i &\sim \mbox{Bern}(\pi_i) \\
-\mbox{logit}(\pi_i) & = \beta_0+\beta_1 \times\mbox{gender}_i +\beta_2 \times \mbox{education}_i\\
-\beta_0 &\sim \mbox{Normal}(0, 2.5)\\
-\beta_1 &\sim \mbox{Normal}(0, 2.5)\\
-\beta_2 &\sim \mbox{Normal}(0. 2.5)
-\end{align}
+To create the model, let $y_i$ represent the respondent's political preference, defined as 1 for Trump and 0 for Biden. Gender is denoted by $g_i$, and age by $a_i$.
+
+The logistic regression model can be formed as follows:
+
+
+\begin{align*} 
+y_i|\pi_i &\sim \text{Bernoulli}(\pi_i) \\
+\text{logit}(\pi_i) & = \beta_0 + \beta_1 \times g_i + \beta_2 \times e_i \\
+\beta_0 &\sim \text{Normal}(0, 2.5)\\
+\beta_1 &\sim \text{Normal}(0, 2.5)\\
+\beta_2 &\sim \text{Normal}(0, 2.5)
+\end{align*}
+
+
+Where:
+- $y_i$ is the political preference of the ith respondent.
+- $\pi_i$ is the probability of supporting Trump for the ith respondent.
+- $g_i$ represents the gender of the ith respondent.
+- $e_i$ represents the education level of the ith respondent.
+- $\beta_0$, $\beta_1$, and $\beta_2$ are the parameters of the model, representing the intercept, the effect of gender, and the effect of education on the likelyhood of supporting Trump, respectively.
+
 
 # Results {#sec-result}
 
 The logistic regression model provides invaluable information related to voter preferences.
 
+
 ## Results Table
-```{r}
+```{r fig-fig3, echo=FALSE, warning=FALSE}
 #| label: tbl-table1
 #| tbl-cap: Results of logistic regression on the voted for Trump
-#| echo: false
-#| warning: false
 
 voter_preferences <- readRDS(here::here("model/2022_cces_voter_model.rds"))
 
@@ -132,15 +144,19 @@ modelsummary(
 
 ```
 
+Below, the results of the logistic regression model are shown in a statistical form.
+
+In the next section, the results will be interpreted in a simpler manner.
+
 # Discussion {#sec-discussion}
 
 ## Model Interpreted Results
 
 The summary of the results, as shown above, indicate the following:
 
-1. Females and those identifying as Non-binary are more strongly against voting for Trump when compared to the reference group.
+1. Females and those identifying as "Non-binary" are more strongly against voting for Trump when compared to the reference group.
    
-2. Those identifying as Other are more likely to vote for Trump than the reference group.
+2. Those identifying as "Other" are more likely to vote for Trump than the reference group.
    
 3. Those that have completed a 4-year college or university program are much less likely to vote for Trump than those with no highschool education or those with a highschool diploma.
    
